@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,7 +7,7 @@
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Merriweather:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&family=Merriweather:wght@400;700&display=swap" rel="stylesheet">
     <style>
         :root {
             --primary-color: #1a202c; /* Dark Slate */
@@ -21,6 +21,10 @@
             font-family: 'Merriweather', serif;
             color: var(--text-color);
             line-height: 1.6;
+            /* Adinkra symbols background pattern */
+            background-color: var(--bg-light);
+            background-image: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23d1d5db' fill-opacity='0.2'%3E%3Cpath d='M20 20.5h.5V40h-1V20.5zM0 20.5h.5V40h-1V20.5zM10 20.5h.5V40h-1V20.5zM30 20.5h.5V40h-1V20.5zM20 0h.5v19.5h-1V0zM0 0h.5v19.5h-1V0zM10 0h.5v19.5h-1V0zM30 0h.5v19.5h-1V0zM0 0h39.5v.5H0zM0 9.5h39.5v.5H0zM0 19.5h39.5v.5H0zM0 29.5h39.5v.5H0z'/%3E%3C/g%3E%3C/svg%3E");
+            background-attachment: fixed;
         }
 
         h1, h2, h3, h4, h5, h6 {
@@ -48,16 +52,23 @@
             background-color: var(--primary-color);
         }
         
+        /* Increased opacity for better text visibility */
         .hero-overlay {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.6);
+            background-color: rgba(0, 0, 0, 0.7);
             z-index: 0;
         }
         
+        /* Specific override for hero section heading */
+        .hero-section h1, .hero-section p {
+            color: #fff;
+            font-family: 'Poppins', sans-serif;
+        }
+
         .profile-image-container {
             border: 5px solid var(--accent-color);
         }
@@ -82,21 +93,103 @@
         .contact-bg {
             background-color: var(--primary-color);
         }
+
+        /* Scroll Progress Bar */
+        #progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 4px;
+            background-color: var(--accent-color);
+            z-index: 100;
+            transition: width 0.1s linear;
+        }
+        
+        /* New Animations */
+        .animated-hero {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 1s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+        }
+        
+        .animated-hero-1 { animation-delay: 0.2s; }
+        .animated-hero-2 { animation-delay: 0.4s; }
+        .animated-hero-3 { animation-delay: 0.6s; }
+        
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .fade-in-up {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94), transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+        
+        .fade-in-up.in-view {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .scale-in {
+            opacity: 0;
+            transform: scale(0.9);
+            transition: opacity 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94), transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+        
+        .scale-in.in-view {
+            opacity: 1;
+            transform: scale(1);
+        }
+        
+        /* New bounce animation for icons */
+        .bounce-in {
+            opacity: 0;
+            transform: scale(0.5);
+            transition: opacity 0.8s ease, transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .bounce-in.in-view {
+            opacity: 1;
+            transform: scale(1);
+        }
+        
     </style>
 </head>
 <body class="bg-gray-100">
+    <!-- Scroll Progress Bar -->
+    <div id="progress-bar"></div>
 
     <!-- Navbar -->
     <nav class="sticky top-0 z-50 bg-white shadow-lg py-4">
         <div class="container mx-auto flex justify-between items-center px-6">
             <a href="#" class="text-2xl font-bold text-gray-800">E. Tenkorang</a>
+            <!-- Desktop Nav -->
             <div class="hidden md:flex space-x-8">
                 <a href="#home" class="text-gray-600 hover:text-gray-900 transition duration-300">Home</a>
                 <a href="#about" class="text-gray-600 hover:text-gray-900 transition duration-300">About</a>
+                <a href="#experience" class="text-gray-600 hover:text-gray-900 transition duration-300">Experience</a>
+                <a href="#philosophy" class="text-gray-600 hover:text-gray-900 transition duration-300">Philosophy</a>
                 <a href="#skills" class="text-gray-600 hover:text-gray-900 transition duration-300">Skills</a>
                 <a href="#gallery" class="text-gray-600 hover:text-gray-900 transition duration-300">Gallery</a>
                 <a href="#contact" class="text-gray-600 hover:text-gray-900 transition duration-300">Contact</a>
             </div>
+            <!-- Mobile Menu Button -->
+            <button id="mobile-menu-btn" class="md:hidden text-gray-800 focus:outline-none">
+                <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+            </button>
+        </div>
+        <!-- Mobile Menu Dropdown -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white mt-2 py-2 shadow-lg">
+            <a href="#home" class="block px-4 py-2 text-gray-600 hover:bg-gray-100">Home</a>
+            <a href="#about" class="block px-4 py-2 text-gray-600 hover:bg-gray-100">About</a>
+            <a href="#experience" class="block px-4 py-2 text-gray-600 hover:bg-gray-100">Experience</a>
+            <a href="#philosophy" class="block px-4 py-2 text-gray-600 hover:bg-gray-100">Philosophy</a>
+            <a href="#skills" class="block px-4 py-2 text-gray-600 hover:bg-gray-100">Skills</a>
+            <a href="#gallery" class="block px-4 py-2 text-gray-600 hover:bg-gray-100">Gallery</a>
+            <a href="#contact" class="block px-4 py-2 text-gray-600 hover:bg-gray-100">Contact</a>
         </div>
     </nav>
 
@@ -108,9 +201,10 @@
                 <source src="video.mp4" type="video/mp4">
             </video>
             <div class="relative z-10">
-                <h1 class="text-5xl md:text-7xl font-bold font-merriweather mb-4 drop-shadow-lg">Emmanuel Tenkorang</h1>
-                <p class="text-xl md:text-3xl font-light tracking-wide drop-shadow-md">Armoured Corps, British Army</p>
-                <p class="mt-6 text-sm md:text-lg text-gray-300">Serving with pride and dedication since August 2024</p>
+                <h1 class="text-5xl md:text-7xl font-black mb-4 drop-shadow-lg animated-hero animated-hero-1">Emmanuel Tenkorang</h1>
+                <p class="text-xl md:text-3xl font-bold tracking-wide drop-shadow-md animated-hero animated-hero-2">Armoured Corps, British Army</p>
+                <p class="mt-6 text-sm md:text-lg text-gray-300 animated-hero animated-hero-3">Serving with pride and dedication since August 2024</p>
+                <a href="#contact" class="mt-8 inline-block bg-amber-500 text-white font-bold py-3 px-6 rounded-lg hover:bg-amber-600 transition-colors duration-300 animated-hero animated-hero-4">Get in Touch</a>
             </div>
         </header>
 
@@ -119,40 +213,116 @@
             <div class="container mx-auto px-6">
                 <div class="flex flex-col md:flex-row items-center justify-center space-y-12 md:space-y-0 md:space-x-12">
                     <div class="w-full md:w-1/3 text-center">
-                        <div class="profile-image-container w-64 h-64 md:w-80 md:h-80 mx-auto rounded-full overflow-hidden shadow-2xl">
-                            <img src="lafta.png" alt="Profile picture of Emmanuel Tenkorang" class="w-full h-full object-cover">
+                        <div class="profile-image-container w-64 h-64 md:w-80 md:h-80 mx-auto rounded-full overflow-hidden shadow-2xl scale-in">
+                            <img src="lafta.png" alt="Professional portrait of Emmanuel Tenkorang" class="w-full h-full object-cover">
                         </div>
                     </div>
-                    <div class="w-full md:w-2/3 text-center md:text-left">
+                    <div class="w-full md:w-2/3 text-center md:text-left fade-in-up">
                         <h2 class="text-3xl md:text-4xl font-bold mb-4">About Me</h2>
-                        <p class="text-lg leading-relaxed mb-4">I am a vibrant and energetic individual who proudly joined the British Army as part of the Armoured Corps on Friday, 9 August 2024. This decision marks the beginning of a journey driven by a passion for peace and a commitment to making a tangible impact on the world.</p>
-                        <p class="text-lg leading-relaxed">My journey began in the heart of Ghana, where I spent the first 23 years of my life. Growing up in a land rich with culture, tradition, and community spirit, I developed a deep sense of responsibility towards others. The discipline and camaraderie required in the Armoured Corps have sharpened my physical and mental abilities and instilled in me a profound sense of purpose.</p>
+                        <p class="text-lg leading-relaxed mb-4">I am a vibrant and energetic individual who proudly joined the British Army as part of the Armoured Corps on Friday, 9 August 2024. This decision marks the beginning of a journey driven by a passion for peace and a commitment to making a tangible impact on the world. My career is not just a job; it is a calling to serve and protect, to embody the values of discipline, integrity, and courage. I am dedicated to continuous learning and professional growth, always seeking new challenges to push my limits.</p>
+                        <p class="text-lg leading-relaxed">My journey began in the heart of Ghana, where I spent the first 23 years of my life. Growing up in a land rich with culture, tradition, and community spirit, I developed a deep sense of responsibility towards others. The discipline and camaraderie required in the Armoured Corps have sharpened my physical and mental abilities and instilled in me a profound sense of purpose. I believe in the power of teamwork and the strength of a united front, and I am committed to contributing to a safe and secure world for all.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Experience Timeline Section -->
+        <section id="experience" class="py-20 md:py-32 bg-slate-800 text-white">
+            <div class="container mx-auto px-6">
+                <h2 class="text-3xl md:text-4xl font-bold text-center mb-16 fade-in-up">Professional Experience</h2>
+                <div class="relative max-w-4xl mx-auto">
+                    <!-- Timeline Line -->
+                    <div class="absolute left-1/2 -ml-0.5 w-1 h-full bg-gray-600 hidden md:block"></div>
+                    <!-- Timeline Item 1 -->
+                    <div class="mb-8 flex justify-between items-center w-full right-timeline">
+                        <div class="order-1 w-5/12 hidden md:block"></div>
+                        <div class="z-10 flex items-center order-1 bg-amber-500 shadow-xl w-8 h-8 rounded-full bounce-in">
+                            <h1 class="mx-auto font-semibold text-lg text-white">1</h1>
+                        </div>
+                        <div class="order-1 bg-gray-700 rounded-lg shadow-xl w-full md:w-5/12 px-6 py-4 fade-in-up">
+                            <h3 class="mb-3 font-bold text-white text-xl">Pre-Enlistment</h3>
+                            <p class="text-sm leading-snug tracking-wide text-gray-300">Before joining the military, I honed my skills in various roles, gaining valuable experience in leadership and community service.</p>
+                        </div>
+                    </div>
+                    <!-- Timeline Item 2 -->
+                    <div class="mb-8 flex justify-between items-center w-full left-timeline flex-row-reverse">
+                        <div class="order-1 w-5/12 hidden md:block"></div>
+                        <div class="z-10 flex items-center order-1 bg-amber-500 shadow-xl w-8 h-8 rounded-full bounce-in">
+                            <h1 class="mx-auto font-semibold text-lg text-white">2</h1>
+                        </div>
+                        <div class="order-1 bg-gray-700 rounded-lg shadow-xl w-full md:w-5/12 px-6 py-4 fade-in-up">
+                            <h3 class="mb-3 font-bold text-white text-xl">Basic Training</h3>
+                            <p class="text-sm leading-snug tracking-wide text-gray-300">Successfully completed rigorous basic training, demonstrating physical and mental fortitude, discipline, and teamwork.</p>
+                        </div>
+                    </div>
+                     <!-- Timeline Item 3 -->
+                     <div class="mb-8 flex justify-between items-center w-full right-timeline">
+                        <div class="order-1 w-5/12 hidden md:block"></div>
+                        <div class="z-10 flex items-center order-1 bg-amber-500 shadow-xl w-8 h-8 rounded-full bounce-in">
+                            <h1 class="mx-auto font-semibold text-lg text-white">3</h1>
+                        </div>
+                        <div class="order-1 bg-gray-700 rounded-lg shadow-xl w-full md:w-5/12 px-6 py-4 fade-in-up">
+                            <h3 class="mb-3 font-bold text-white text-xl">Armoured Corps Training</h3>
+                            <p class="text-sm leading-snug tracking-wide text-gray-300">Specialized training in operating and maintaining advanced armored vehicles, vital for modern military operations.</p>
+                        </div>
+                    </div>
+                     <!-- Timeline Item 4 -->
+                     <div class="mb-8 flex justify-between items-center w-full left-timeline flex-row-reverse">
+                        <div class="order-1 w-5/12 hidden md:block"></div>
+                        <div class="z-10 flex items-center order-1 bg-amber-500 shadow-xl w-8 h-8 rounded-full bounce-in">
+                            <h1 class="mx-auto font-semibold text-lg text-white">4</h1>
+                        </div>
+                        <div class="order-1 bg-gray-700 rounded-lg shadow-xl w-full md:w-5/12 px-6 py-4 fade-in-up">
+                            <h3 class="mb-3 font-bold text-white text-xl">Active Service</h3>
+                            <p class="text-sm leading-snug tracking-wide text-gray-300">Proudly serving with the British Army, committed to national security and global peacekeeping missions.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Philosophy Section -->
+        <section id="philosophy" class="py-20 md:py-32 bg-white">
+            <div class="container mx-auto px-6">
+                <h2 class="text-3xl md:text-4xl font-bold text-center mb-12 fade-in-up">My Core Philosophy</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 text-center">
+                    <div class="p-8 border-l-4 border-amber-500 bg-gray-50 rounded-lg shadow-md bounce-in">
+                        <h3 class="text-2xl font-semibold mb-2 text-gray-800">Perseverance</h3>
+                        <p class="text-gray-600">Through grit and determination, I believe any obstacle can be overcome. I never give up on a challenge.</p>
+                    </div>
+                    <div class="p-8 border-l-4 border-amber-500 bg-gray-50 rounded-lg shadow-md bounce-in" style="transition-delay: 0.1s;">
+                        <h3 class="text-2xl font-semibold mb-2 text-gray-800">Integrity</h3>
+                        <p class="text-gray-600">Honesty and a strong moral compass are the foundations of all my actions, both personal and professional.</p>
+                    </div>
+                    <div class="p-8 border-l-4 border-amber-500 bg-gray-50 rounded-lg shadow-md bounce-in" style="transition-delay: 0.2s;">
+                        <h3 class="text-2xl font-semibold mb-2 text-gray-800">Service</h3>
+                        <p class="text-gray-600">I am dedicated to serving others and making a positive impact on the world, one action at a time.</p>
                     </div>
                 </div>
             </div>
         </section>
 
         <!-- Skills & Achievements Section -->
-        <section id="skills" class="py-20 md:py-32 bg-white">
+        <section id="skills" class="py-20 md:py-32 bg-gray-100">
             <div class="container mx-auto px-6">
-                <h2 class="text-3xl md:text-4xl font-bold text-center mb-12">Skills & Achievements</h2>
+                <h2 class="text-3xl md:text-4xl font-bold text-center mb-12 fade-in-up">Skills & Achievements</h2>
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                     <!-- Skills Cards -->
-                    <div class="card p-6 bg-gray-50 rounded-lg shadow-md hover:shadow-xl">
+                    <div class="card p-6 bg-white rounded-lg shadow-md hover:shadow-xl fade-in-up">
                         <div class="text-4xl mb-4 card-icon">
                             <svg class="h-12 w-12" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a8 8 0 100 16 8 8 0 000-16zM6 10a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1z"></path></svg>
                         </div>
                         <h3 class="text-xl font-semibold mb-2">Reading & Storytelling</h3>
                         <p class="text-gray-600">A lifelong passion that has broadened my perspectives and enhanced my communication skills.</p>
                     </div>
-                    <div class="card p-6 bg-gray-50 rounded-lg shadow-md hover:shadow-xl">
+                    <div class="card p-6 bg-white rounded-lg shadow-md hover:shadow-xl fade-in-up" style="transition-delay: 0.1s;">
                         <div class="text-4xl mb-4 card-icon">
                             <svg class="h-12 w-12" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a8 8 0 100 16 8 8 0 000-16zM6 10a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1z"></path></svg>
                         </div>
                         <h3 class="text-xl font-semibold mb-2">Critical Thinking</h3>
                         <p class="text-gray-600">Developed through rigorous education and practical experiences, allowing for effective problem-solving.</p>
                     </div>
-                    <div class="card p-6 bg-gray-50 rounded-lg shadow-md hover:shadow-xl">
+                    <div class="card p-6 bg-white rounded-lg shadow-md hover:shadow-xl fade-in-up" style="transition-delay: 0.2s;">
                         <div class="text-4xl mb-4 card-icon">
                             <svg class="h-12 w-12" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a8 8 0 100 16 8 8 0 000-16zM6 10a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1z"></path></svg>
                         </div>
@@ -161,21 +331,21 @@
                     </div>
                     
                     <!-- Achievements Cards -->
-                    <div class="card p-6 bg-gray-50 rounded-lg shadow-md hover:shadow-xl">
+                    <div class="card p-6 bg-white rounded-lg shadow-md hover:shadow-xl fade-in-up" style="transition-delay: 0.3s;">
                         <div class="text-4xl mb-4 card-icon">
                             <svg class="h-12 w-12" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a8 8 0 100 16 8 8 0 000-16zM6 10a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1z"></path></svg>
                         </div>
                         <h3 class="text-xl font-semibold mb-2">Advanced Training</h3>
                         <p class="text-gray-600">Completed advanced training in armored vehicle operations and maintenance.</p>
                     </div>
-                    <div class="card p-6 bg-gray-50 rounded-lg shadow-md hover:shadow-xl">
+                    <div class="card p-6 bg-white rounded-lg shadow-md hover:shadow-xl fade-in-up" style="transition-delay: 0.4s;">
                         <div class="text-4xl mb-4 card-icon">
                             <svg class="h-12 w-12" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a8 8 0 100 16 8 8 0 000-16zM6 10a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1z"></path></svg>
                         </div>
                         <h3 class="text-xl font-semibold mb-2">Soldier of the Month</h3>
                         <p class="text-gray-600">Recognized for outstanding performance and dedication to my duties.</p>
                     </div>
-                    <div class="card p-6 bg-gray-50 rounded-lg shadow-md hover:shadow-xl">
+                    <div class="card p-6 bg-white rounded-lg shadow-md hover:shadow-xl fade-in-up" style="transition-delay: 0.5s;">
                         <div class="text-4xl mb-4 card-icon">
                             <svg class="h-12 w-12" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a8 8 0 100 16 8 8 0 000-16zM6 10a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1z"></path></svg>
                         </div>
@@ -189,13 +359,13 @@
         <!-- Testimonials Section -->
         <section class="py-20 md:py-32 testimonial-bg">
             <div class="container mx-auto px-6">
-                <h2 class="text-3xl md:text-4xl font-bold text-center mb-12">Testimonials</h2>
+                <h2 class="text-3xl md:text-4xl font-bold text-center mb-12 fade-in-up">Testimonials</h2>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-                    <div class="p-8 bg-white rounded-lg shadow-md">
+                    <div class="p-8 bg-white rounded-lg shadow-md fade-in-up">
                         <blockquote class="text-lg italic leading-relaxed text-gray-700">"Emmanuel's dedication and passion for service are truly inspiring. He leads by example and motivates others to strive for excellence."</blockquote>
                         <footer class="mt-4 text-sm font-semibold text-gray-500">— A Colleague</footer>
                     </div>
-                    <div class="p-8 bg-white rounded-lg shadow-md">
+                    <div class="p-8 bg-white rounded-lg shadow-md fade-in-up" style="transition-delay: 0.1s;">
                         <blockquote class="text-lg italic leading-relaxed text-gray-700">"His ability to connect with people and uplift them is remarkable. Emmanuel is a true asset to any team."</blockquote>
                         <footer class="mt-4 text-sm font-semibold text-gray-500">— A Mentor</footer>
                     </div>
@@ -206,7 +376,7 @@
         <!-- Gallery Section -->
         <section id="gallery" class="py-20 md:py-32 bg-gray-100">
             <div class="container mx-auto px-6">
-                <h2 class="text-3xl md:text-4xl font-bold text-center mb-12">Photo Gallery</h2>
+                <h2 class="text-3xl md:text-4xl font-bold text-center mb-12 fade-in-up">Photo Gallery</h2>
                 <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
                     <img src="g.jpg" alt="Emmanuel in military uniform on a training exercise." class="w-full h-auto rounded-lg shadow-md">
                     <img src="d.jpg" alt="A candid shot of soldiers on patrol." class="w-full h-auto rounded-lg shadow-md">
@@ -223,8 +393,8 @@
         <!-- Contact Section -->
         <section id="contact" class="py-20 md:py-32 contact-bg text-white">
             <div class="container mx-auto px-6">
-                <h2 class="text-3xl md:text-4xl font-bold text-center mb-12">Get in Touch</h2>
-                <div class="text-center">
+                <h2 class="text-3xl md:text-4xl font-bold text-center mb-12 fade-in-up">Get in Touch</h2>
+                <div class="text-center fade-in-up">
                     <p class="text-lg mb-4">For professional inquiries, collaborations, or questions, please feel free to reach out.</p>
                     <div class="flex flex-col md:flex-row items-center justify-center md:space-x-8 space-y-4 md:space-y-0">
                         <a href="mailto:emmanueltenkorang@gmail.com" class="text-lg hover:underline transition duration-300">emmanueltenkorang@gmail.com</a>
@@ -241,6 +411,53 @@
             <p>&copy; 2024 Emmanuel Tenkorang. All rights reserved.</p>
         </div>
     </footer>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Hero section animation
+            const heroElements = document.querySelectorAll('.animated-hero');
+            heroElements.forEach(el => {
+                el.style.opacity = '1';
+                el.style.transform = 'translateY(0)';
+            });
 
+            // Intersection Observer for on-scroll animations
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.2
+            };
+
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('in-view');
+                        // Remove the observer for a one-time animation
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, observerOptions);
+
+            const elementsToAnimate = document.querySelectorAll('.fade-in-up, .scale-in, .bounce-in');
+            elementsToAnimate.forEach(el => {
+                observer.observe(el);
+            });
+            
+            const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+            const mobileMenu = document.getElementById('mobile-menu');
+
+            mobileMenuBtn.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+
+            // Scroll progress bar
+            window.addEventListener('scroll', () => {
+                const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+                const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+                const scrolled = (winScroll / height) * 100;
+                document.getElementById('progress-bar').style.width = scrolled + "%";
+            });
+        });
+    </script>
 </body>
 </html>
